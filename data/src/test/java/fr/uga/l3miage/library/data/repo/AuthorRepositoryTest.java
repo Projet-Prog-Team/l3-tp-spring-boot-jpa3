@@ -18,6 +18,21 @@ class AuthorRepositoryTest extends Base {
     @Test
     void all(){
         Author a1 = Fixtures.newAuthor();
+        a1.setFullName("William Gibson");
+        Author a2 = Fixtures.newAuthor();
+        a2.setFullName("Victor Hugo");
+        Author a3 = Fixtures.newAuthor();
+        a3.setFullName("Moliere");
+        Author a4 = Fixtures.newAuthor();
+        a4.setFullName("Honore de Balzac");
+        Author a5 = Fixtures.newAuthor();
+        a5.setFullName("Emile Zola");
+        Author a6 = Fixtures.newAuthor();
+        a6.setFullName("Marie de France");
+        Author a7 = Fixtures.newAuthor();
+        a7.setFullName("Françoise Sagan");
+
+
 
     }
 
@@ -36,6 +51,24 @@ class AuthorRepositoryTest extends Base {
 
         List<Author> authors = authorRepository.searchByName("Will");
         assertThat(authors).containsExactly(a1);
+
+        /**
+         * TESTS SUPPLEMENTAIRES
+         */
+        List<Author> authors1 = authorRepository.searchByName("thur");
+        assertThat(authors1).containsExactly(a2);
+
+        List<Author> authors2 = authorRepository.searchByName("Gibson");
+        assertThat(authors2).containsExactly(a1);
+
+        List<Author> authors3 = authorRepository.searchByName("William Gibson");
+        assertThat(authors3).containsExactly(a1);
+
+        List<Author> authors4 = authorRepository.searchByName("Arth");
+        assertThat(authors4).containsExactly(a2);
+
+        List<Author> authors5 = authorRepository.searchByName("Arthur Hemingway");
+        assertThat(authors5).containsExactly(a2);
 
     }
 
