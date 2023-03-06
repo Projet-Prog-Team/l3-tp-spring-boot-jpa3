@@ -1,21 +1,36 @@
 package fr.uga.l3miage.library.data.domain;
 
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "book")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "isbn")
     private long isbn;
+
+    @Column(name = "publisher")
     private String publisher;
+
+    @Column(name = "year")
     private short year;
+
+    @Column(name = "language")
     private Language language;
 
-    @Transient
+    @Column(name = "authors")
+    @ManyToMany(mappedBy="books")
     private Set<Author> authors;
 
     public Long getId() {

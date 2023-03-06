@@ -16,6 +16,12 @@ class AuthorRepositoryTest extends Base {
     AuthorRepository authorRepository;
 
     @Test
+    void all(){
+        Author a1 = Fixtures.newAuthor();
+
+    }
+
+    @Test
     void searchByName() {
 
         Author a1 = Fixtures.newAuthor();
