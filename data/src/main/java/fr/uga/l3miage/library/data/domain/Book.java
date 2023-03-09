@@ -6,9 +6,45 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+//NamedQuery pour la fonction all-books qui va renvoyer tous les livres 
+@NamedQuery(
+    name = "all-books",
+    query = "SELECT b FROM Book b"
+)
+
+//NamedQuery pour la fonction indByContainingTitle(String namePart) qui va renvoyer les livres dont le paramètre est contenu dans le titre
+@NamedQuery(
+    name = "find-books-by-title",
+    query = "SELECT b FROM Book b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :titlePart, '%'))"
+)
+
+//NamedQuery pour la fonction findByAuthorIdAndContainingTitle(Long authorId, String titlePart) qui va renvoyer les livre en focntion de l'id d'auteur et du titre donné
+@NamedQuery(
+    name = "find-books-by-author-and-title",
+    query = "SELECT b FROM Book b JOIN b.authors a WHERE a.id = :authorId AND LOWER(b.title) LIKE CONCAT('%', LOWER(:titlePart), '%')"
+)
+
+
+//NamedQuery pour la fonction findBooksByAuthorContainingName(String namePart) qui va renvoyer les livres dont les noms d'auteurs sont passés en paramètre
+@NamedQuery(
+    name = "find-books-by-authors-name",
+    query="SELECT b FROM Book b JOIN b.authors a WHERE LOWER(a.fullName) LIKE CONCAT('%', LOWER(:namePart), '%')"
+)
+    
+@NamedQuery(
+    name = "find-books-by-several-authors",
+    query = "SELECT b FROM Book b WHERE SIZE(b.authors) > :count"
+)
+
+
+
+
+
 @Entity
 @Table(name = "book")
 public class Book {
+
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +59,7 @@ public class Book {
     @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "year")
+    @Column(name = "annee")
     private short year;
 
     @Column(name = "language")
@@ -113,4 +149,6 @@ public class Book {
     public int hashCode() {
         return Objects.hash(title, isbn, publisher, year, language, authors);
     }
+
+    
 }
