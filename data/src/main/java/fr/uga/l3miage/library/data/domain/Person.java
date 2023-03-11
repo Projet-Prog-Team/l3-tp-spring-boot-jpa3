@@ -3,9 +3,17 @@ package fr.uga.l3miage.library.data.domain;
 import java.util.Date;
 import java.util.Objects;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="person")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "person_type")
 public abstract class Person {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Gender gender;
     private String firstName;
     private String lastName;
@@ -15,7 +23,7 @@ public abstract class Person {
         FEMALE, MALE, FLUID
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

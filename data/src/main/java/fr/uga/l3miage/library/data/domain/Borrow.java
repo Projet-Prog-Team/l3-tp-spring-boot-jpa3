@@ -4,12 +4,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "borrow")
 public class Borrow {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToMany
     private List<Book> books;
     private Date start;
     private Date requestedReturn;
+    @OneToOne
     private User borrower;
+    @OneToOne
     private Librarian librarian;
     private boolean finished;
 

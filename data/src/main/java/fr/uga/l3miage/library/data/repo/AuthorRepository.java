@@ -42,7 +42,8 @@ public class AuthorRepository implements CRUDRepository<Long, Author> {
      */
     @Override
     public List<Author> all() {
-        //query : String contient la requête qui va rechercher les noms d'auteurs dans la table Author et les trier par ordre alphabétique
+
+        //Requête qui va rechercher les noms d'auteurs dans la table Author et les trier par ordre alphabétique
         String query = "FROM Author a ORDER BY a.fullName";
 
         //La méthode getResultList() est utilisée pour exécuter la requête et retourner les résultats.
@@ -57,7 +58,7 @@ public class AuthorRepository implements CRUDRepository<Long, Author> {
      */
     public List<Author> searchByName(String namePart) {
 
-        //query : String est la variable qui contient la requête qui va pour sélectionner les auteurs dont le nom (en minuscules) contient la chaîne de caractères spécifiée.
+        //Requête qui va sélectionner les auteurs dont le nom (en minuscules) contient la chaîne de caractères spécifiée.
         String query = "SELECT a FROM Author a WHERE LOWER(a.fullName) LIKE LOWER(:namePart) ORDER BY a.fullName";
 
         // La méthode setParameter() est utilisée pour injecter le paramètre namePart dans la requête.
@@ -74,12 +75,15 @@ public class AuthorRepository implements CRUDRepository<Long, Author> {
      * @return true si l'auteur partage
      */
     public boolean checkAuthorByIdHavingCoAuthoredBooks(long authorId) {
+
+        //Requête qui va rechercher si l'auteur d'id authorId a au moins un livre co-écrit avec un autre auteur
         String query = "SELECT COUNT(*) FROM Book b " +
         "JOIN b.authors a " +
         "WHERE a.id = :authorId " +
         "AND EXISTS (SELECT 1 FROM Book bb JOIN bb.authors aa WHERE aa.id <> a.id AND bb.id = b.id)";
+
         Long count = entityManager.createQuery(query, Long.class)
-                        .setParameter("authorId", authorId)
+                        .setParameter("authorId", authorId)         //on injecte le paramètre authorId dans la requête
                         .getSingleResult();
         return count > 0;
     }

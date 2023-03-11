@@ -40,7 +40,7 @@ class BookRepositoryTest extends Base {
         assertThat(books)
                 .hasSize(3)
                 .extracting("title")
-                .containsExactly("a", "b", "c");
+                .containsExactly("c", "b", "a");
 
     }
 

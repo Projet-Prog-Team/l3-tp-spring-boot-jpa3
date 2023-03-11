@@ -5,6 +5,11 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -44,8 +49,12 @@ public class UserRepository implements CRUDRepository<String, User> {
      * @return
      */
     public List<User> findAllOlderThan(int age) {
-        // TODO
-        return null;
+        ZonedDateTime minYears = ZonedDateTime.now().minus(age, ChronoUnit.YEARS);
+        String requete = "SELECT u FROM User u WHERE u.birth < :minYears";
+        List<User> userMinYears= entityManager.createQuery(requete, User.class)
+        .setParameter("minYears", Date.from(minYears.toInstant()))
+        .getResultList();
+        return userMinYears;
     }
 
 }
