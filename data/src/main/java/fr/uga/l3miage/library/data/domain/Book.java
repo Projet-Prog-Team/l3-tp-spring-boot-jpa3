@@ -9,7 +9,7 @@ import java.util.Set;
 //NamedQuery pour la fonction all-books qui va renvoyer tous les livres 
 @NamedQuery(
     name = "all-books",
-    query = "SELECT b FROM Book b"
+    query = "SELECT b FROM Book b ORDER BY b.title ASC"
 )
 
 //NamedQuery pour la fonction indByContainingTitle(String namePart) qui va renvoyer les livres dont le paramètre est contenu dans le titre
